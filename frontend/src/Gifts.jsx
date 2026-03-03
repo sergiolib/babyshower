@@ -104,7 +104,7 @@ function Gifts() {
         triggerFireworks();
         fetchGifts();
       } else {
-        alert('Error al reservar: ' + data.error);
+        alert('Error al confirmar: ' + data.error);
       }
     })
     .catch(err => {
@@ -157,7 +157,7 @@ function Gifts() {
                     <span className="badge reserved-badge">Ya Reservado</span>
                   ) : gift.showReserveButton ? (
                     <button className="reserve-btn" onClick={() => handleReserveClick(gift)}>
-                      Reservar
+                      Yo compraré esto
                     </button>
                   ) : null}
                 </div>
@@ -172,7 +172,7 @@ function Gifts() {
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h2>Reservar Regalo</h2>
+            <h2>Yo compraré esto</h2>
             <span className="gift-name">{selectedGift?.name}</span>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -210,7 +210,7 @@ function Gifts() {
               <div className="modal-actions">
                 <button type="button" className="btn-cancel" onClick={closeModal}>Cancelar</button>
                 <button type="submit" className="btn-confirm" disabled={submitting}>
-                  {submitting ? 'Reservando...' : 'Confirmar Reserva'}
+                  {submitting ? 'Procesando...' : 'Confirmar que lo compraré'}
                 </button>
               </div>
             </form>
@@ -221,8 +221,10 @@ function Gifts() {
       {confirmedName && (
         <div className="success-overlay">
           <div className="success-content">
-            <h2>🎉 ¡Reservado!</h2>
-            <p>Gracias <strong>{confirmedName}</strong>, ¡nos vemos en el magno evento!</p>
+            <h2>🎉 ¡Listo!</h2>
+            <p>Gracias <strong>{confirmedName}</strong></p>
+            <p>Nadie más que tú comprará este regalo.</p>
+            <p>¡Nos vemos en el magno evento!</p>
             <p className="signature">Nico, Romina, Sergio</p>
             <button className="btn-close-success" onClick={() => setConfirmedName('')}>
               Cerrar
