@@ -125,6 +125,11 @@ function Gifts() {
           <p className="subtitle">Ayúdanos a prepararnos para la llegada de Nico.</p>
         </header>
 
+        <div className="card note-card" style={{ marginBottom: '2rem', textAlign: 'center' }}>
+          <h3>🚚 ¿Quieres enviar un regalo?</h3>
+          <p>Nuestra dirección es: <strong>Hernando de Magallanes 1677, Depto. 214, Las Condes, Santiago.</strong></p>
+        </div>
+
         {loading ? (
           <div className="loading">Cargando lista...</div>
         ) : (
