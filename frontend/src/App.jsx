@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import BabyRain from './BabyRain';
 import Gifts from './Gifts';
 import EventInfo from './EventInfo';
+import RSVP from './RSVP';
 import './App.css';
 
 function Home() {
@@ -26,6 +27,13 @@ function Home() {
           </header>
 
           <div className="grid">
+            <Link to="/rsvp" className="card-link">
+              <div className="card clickable">
+                <h3>Confirmar Asistencia</h3>
+                <p>¡Cuéntanos si podrás venir a celebrar con nosotros!</p>
+                <span className="arrow">→</span>
+              </div>
+            </Link>
             <Link to="/evento" className="card-link">
               <div className="card clickable">
                 <h3>Información del Evento</h3>
@@ -61,6 +69,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/regalos" element={<Gifts />} />
         <Route path="/evento" element={<EventInfo />} />
+        <Route path="/rsvp" element={<RSVP />} />
       </Routes>
     </Router>
   );
