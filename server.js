@@ -118,6 +118,47 @@ app.post("/api/reserve", async (req, res) => {
   }
 });
 
+app.post("/api/rsvp", async (req, res) => {
+  try {
+    const { name, email, phone, partySize } = req.body;
+    const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
+
+    // Intentamos añadir a la hoja "RSVP". Si no existe, Google Sheets API podría fallar.
+    // Como alternativa, podemos intentar simplemente añadir al spreadsheet sin especificar hoja, 
+    // pero es mejor ser explícitos.
+    try {
+      await sheets.spreadsheets.values.append({
+        spreadsheetId,
+        range: "RSVP!A:E",
+        valueInputOption: "RAW",
+        requestBody: {
+          values: [[name, email, phone, partySize, new Date().toLocaleString()]],
+        },
+      });
+    } catch (appendError) {
+      if (appendError.message.includes("range")) {
+        // Si falla por el rango (probablemente el tab "RSVP" no existe), intentamos en el default
+        console.log("Tab 'RSVP' no encontrado, intentando en hoja principal...");
+        await sheets.spreadsheets.values.append({
+          spreadsheetId,
+          range: "A:E",
+          valueInputOption: "RAW",
+          requestBody: {
+            values: [[name, email, phone, partySize, new Date().toLocaleString()]],
+          },
+        });
+      } else {
+        throw appendError;
+      }
+    }
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error saving RSVP:", error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 app.get("/api/hello", (req, res) => {
   res.json({ message: "¡Hola desde el Backend del Baby Shower!" });
 });
